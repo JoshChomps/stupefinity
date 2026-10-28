@@ -1,0 +1,58 @@
+[package]
+name = "stupefinity-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+name = "stupefinity_core"
+path = "src/lib.rs"
+
+# The one app executable: core engine, window, tray and IPC server in a single process.
+[[bin]]
+name = "stupefinity"
+path = "src/main.rs"
+
+[dependencies]
+stupefinity-protocol = { path = "../stupefinity-protocol" }
+
+# Async runtime
+tokio = { version = "1", features = ["rt", "rt-multi-thread", "macros", "sync", "time", "io-util", "net", "process"] }
+
+# Spotify protocol & audio decoding (pinned to 0.8.x series as per build plan)
+librespot = { version = "0.8.0", default-features = false, features = ["rodio-backend", "native-tls"] }
+rodio = { version = "0.21.1", default-features = false, features = ["symphonia-all"] }
+
+# Audio output backend handled via librespot rodio-backend (uses WASAPI on Windows)
+
+# Windows OS Integration, Power Management & System Tray
+windows-sys = { version = "0.59", features = [
+    "Win32_System_Threading",
+    "Win32_System_LibraryLoader",
+    "Win32_Security",
+    "Win32_Media_Audio",
+    "Win32_Foundation",
+    "Win32_System_Power",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_UI_Shell",
+    "Win32_Graphics_Gdi",
+    "Win32_UI_Input_KeyboardAndMouse",
+    "Win32_System_DataExchange",
+    "Win32_System_Memory",
+    "Win32_System_Ole",
+] }
+souvlaki = { version = "0.8.3", default-features = false }
+image = { version = "0.25", default-features = false, features = ["jpeg"] }
+
+# Utilities
+rand = "0.8"
+dirs = "5.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+urlencoding = "2.1"
+reqwest = { version = "0.12", default-features = false, features = ["native-tls", "json"] }
+async-trait = "0.1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+anyhow = "1.0"
+thiserror = "2.0"

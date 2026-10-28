@@ -1,0 +1,19 @@
+# Rust build artifacts
+target/
+**/*.rs.bk
+*.pdb
+
+# Local credentials & caches
+credentials.json
+.credentials
+/cache/
+/data/
+*.token
+*.cache
+
+# IDE and OS files
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+*.log
